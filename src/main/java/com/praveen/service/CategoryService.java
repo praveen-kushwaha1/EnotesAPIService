@@ -42,7 +42,7 @@ public interface CategoryService {
      * @return a {@link CategoryDto} containing category details if found;
      * null if no such category exists or it is marked as deleted.
      */
-    CategoryDto getCategoryById(Integer id);
+    CategoryDto getCategoryById(Integer id)throws Exception;;
 
     /**
      * Mark a category as deleted by its ID.
