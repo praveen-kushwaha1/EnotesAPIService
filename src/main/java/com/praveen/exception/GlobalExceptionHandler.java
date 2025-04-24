@@ -50,4 +50,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     */
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<?> handleValidationException(ValidationException e) {
+        return new ResponseEntity<>(e.getErrors(), HttpStatus.BAD_REQUEST);
+    }
 }
