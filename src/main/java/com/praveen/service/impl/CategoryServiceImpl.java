@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.praveen.exception.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -112,11 +113,18 @@ public class CategoryServiceImpl implements CategoryService {
      * @return the category mapped to a CategoryDto, or null if not found or marked as deleted.
      */
     @Override
-    public CategoryDto getCategoryById(Integer id) {
+    public CategoryDto getCategoryById(Integer id) throws Exception {
         return categoryRepo.findByIdAndIsDeletedFalse(id)
-                .map(category -> modelMapper.map(category, CategoryDto.class))
-                .orElse(null);
+                .map(category -> {
+                    // Transform the name to uppercase and update the category
+                    category.setName(category.getName().toUpperCase());
+                    return modelMapper.map(category, CategoryDto.class);
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id=" + id));
     }
+
+
+
 
     /**
      * Marks a category as deleted by setting its 'isDeleted' field to true.

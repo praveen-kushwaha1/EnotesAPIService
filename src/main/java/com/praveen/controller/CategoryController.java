@@ -54,6 +54,8 @@ public class CategoryController {
      */
     @GetMapping
     public ResponseEntity<List<CategoryDto>> getAllCategories() {
+        //String nm=null;
+		//nm.toUpperCase();
         List<CategoryDto> categories = categoryService.getAllCategory();
         if (CollectionUtils.isEmpty(categories)) {
             return ResponseEntity.noContent().build();
@@ -82,7 +84,7 @@ public class CategoryController {
      * @return ResponseEntity containing the category details or an error message if not found.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCategoryById(@PathVariable Integer id) {
+    public ResponseEntity<?> getCategoryById(@PathVariable Integer id) throws Exception{
         CategoryDto categoryDto = categoryService.getCategoryById(id);
         if (categoryDto == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found with Id=" + id);
