@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.praveen.exception.ResourceNotFoundException;
+import com.praveen.validation.Validation;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepo;
     private final ModelMapper modelMapper;
+    private final Validation validation;
 
     /**
      * Constructor-based dependency injection for CategoryServiceImpl.
@@ -32,9 +34,10 @@ public class CategoryServiceImpl implements CategoryService {
      * @param categoryRepo the repository instance to handle database operations.
      * @param modelMapper  the ModelMapper instance to map entities to DTOs and vice versa.
      */
-    public CategoryServiceImpl(CategoryRepository categoryRepo, ModelMapper modelMapper) {
+    public CategoryServiceImpl(CategoryRepository categoryRepo, ModelMapper modelMapper,Validation validation) {
         this.categoryRepo = categoryRepo;
         this.modelMapper = modelMapper;
+        this.validation=validation;
     }
 
     /**
@@ -46,6 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public Boolean saveCategory(CategoryDto categoryDto) {
+        validation.categoryValidation(categoryDto);
         // Map CategoryDto to Category entity
         Category category = modelMapper.map(categoryDto, Category.class);
 
