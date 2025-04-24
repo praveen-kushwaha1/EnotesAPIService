@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.praveen.exception.ExistDataException;
 import com.praveen.exception.ResourceNotFoundException;
 import com.praveen.validation.Validation;
 import org.modelmapper.ModelMapper;
@@ -50,6 +51,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Boolean saveCategory(CategoryDto categoryDto) {
         validation.categoryValidation(categoryDto);
+        // check category exist or not
+        Boolean exist = categoryRepo.existsByName(categoryDto.getName().trim());
+        if (exist) {
+            // throw error
+            throw new ExistDataException("Category already exist");
+        }
         // Map CategoryDto to Category entity
         Category category = modelMapper.map(categoryDto, Category.class);
 
