@@ -57,7 +57,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (category.getId() == null) {
             // Populate createdOn and createdBy for new categories
             category.setIsDeleted(false);
-            category.setCreatedBy(1); // Example value for 'createdBy'
+           // category.setCreatedBy(1); // Example value for 'createdBy'
             category.setCreatedOn(new Date());
         } else {
             // Update existing category details
@@ -81,8 +81,8 @@ public class CategoryServiceImpl implements CategoryService {
             category.setIsDeleted(existingCategory.getIsDeleted());
 
             // Update the 'updatedBy' and 'updatedOn' fields
-            category.setUpdatedBy(1); // Example value for 'updatedBy'
-            category.setUpdatedOn(new Date());
+           // category.setUpdatedBy(1); // Example value for 'updatedBy'
+           // category.setUpdatedOn(new Date());
         });
     }
 
